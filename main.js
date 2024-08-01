@@ -21,16 +21,11 @@ directionalLight.position.set(1, 1, 1).normalize();
 scene.add(directionalLight);
 
 const loader = new GLTFLoader();
-loader.load(
-    'models/guildhall_great_hall.glb', // Path to your GLB model
-    function (gltf) {
-        scene.add(gltf.scene); // Add the loaded model to the scene
-    },
-    undefined,
-    function (error) {
-        console.error('An error happened', error);
-    }
-);
+loader.load('./models/guildhall_great_hall.glb', function(gltf) {
+  scene.add(gltf.scene);
+}, undefined, function(error) {
+  console.error(error);
+});
 
 camera.position.set(0, 2, 5); // Position the camera
 
