@@ -1,7 +1,8 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
-import { VRButton } from 'three/examples/jsm/webxr/VRButton';
-import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { VRButton } from 'three/examples/jsm/webxr/VRButton.js';
+import { FirstPersonControls } from 'three/examples/jsm/controls/FirstPersonControls.js';
+
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
@@ -21,7 +22,7 @@ directionalLight.position.set(1, 1, 1).normalize();
 scene.add(directionalLight);
 
 const loader = new GLTFLoader();
-loader.load('./models/guildhall_great_hall.glb', function(gltf) {
+loader.load('/models/guildhall_great_hall.glb', function(gltf) {
   scene.add(gltf.scene);
 }, undefined, function(error) {
   console.error(error);
