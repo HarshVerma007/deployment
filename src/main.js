@@ -22,11 +22,30 @@ directionalLight.position.set(1, 1, 1).normalize();
 scene.add(directionalLight);
 
 const loader = new GLTFLoader();
-loader.load('/models/guildhall_great_hall.glb', function(gltf) {
-  scene.add(gltf.scene);
-}, undefined, function(error) {
-  console.error(error);
-});
+
+// Load the GLB model as binary data
+fetch("/models/guildhall_great_hall.glb")
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.arrayBuffer();
+  })
+  .then(arrayBuffer => {
+    // Create a Blob from the arrayBuffer and load it using GLTFLoader
+    const blob = new Blob([arrayBuffer], { type: 'model/gltf-binary' });
+    const url = URL.createObjectURL(blob);
+    
+    loader.load(url, function(gltf) {
+      scene.add(gltf.scene);
+      URL.revokeObjectURL(url); // Clean up the URL object after loading
+    }, undefined, function(error) {
+      console.error('Error loading GLB model:', error);
+    });
+  })
+  .catch(error => {
+    console.error('Error fetching the GLB model:', error);
+  });
 
 camera.position.set(0, 2, 5); // Position the camera
 
