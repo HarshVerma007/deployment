@@ -23,23 +23,21 @@ scene.add(directionalLight);
 
 const loader = new GLTFLoader();
 
-// Load the GLB model as binary data
-fetch("/models/guildhall_great_hall.glb")
+fetch('/models/guildhall_great_hall.glb')
   .then(response => {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    return response.arrayBuffer();
+    return response.arrayBuffer(); // Use arrayBuffer for binary data
   })
   .then(arrayBuffer => {
-    // Create a Blob from the arrayBuffer and load it using GLTFLoader
     const blob = new Blob([arrayBuffer], { type: 'model/gltf-binary' });
     const url = URL.createObjectURL(blob);
-    
-    loader.load(url, function(gltf) {
+
+    loader.load(url, function (gltf) {
       scene.add(gltf.scene);
       URL.revokeObjectURL(url); // Clean up the URL object after loading
-    }, undefined, function(error) {
+    }, undefined, function (error) {
       console.error('Error loading GLB model:', error);
     });
   })
@@ -56,6 +54,6 @@ controls.noFly = false; // Allow vertical movement
 controls.lookVertical = true; // Enable vertical looking
 
 function animate() {
-    controls.update(0.1); // Update controls
-    renderer.render(scene, camera);
+  controls.update(0.1); // Update controls
+  renderer.render(scene, camera);
 }
